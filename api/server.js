@@ -7,6 +7,10 @@ const port = 3000;
 
 app.use(express.json());
 
+app.get("/", (req, res) => {
+  res.redirect("/todos");
+});
+
 // GET -> lihat semua todos
 app.get("/todos", (req, res) => {
   const data = readFile();
