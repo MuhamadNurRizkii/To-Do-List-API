@@ -1,0 +1,32 @@
+[
+  {
+    "id": 1,
+    "name": "baca buku",
+    "status": false,
+    "message": "Tugas belum selesai"
+  },
+  {
+    "id": 2,
+    "name": "belajar javascript DOM",
+    "status": false,
+    "message": "Tugas belum selesai"
+  },
+  {
+    "id": 4,
+    "name": "belajar express js",
+    "status": true,
+    "message": "Tugas selesai"
+  },
+  {
+    "id": 5,
+    "name": "olahraga",
+    "status": false,
+    "message": "Tugas belum selesai"
+  },
+  {
+    "id": 6,
+    "name": "menulis",
+    "status": true,
+    "message": "Tugas selesai"
+  }
+]
