@@ -1,6 +1,7 @@
 const express = require("express");
 const fs = require("fs");
-const { readFile, saveFile } = require("./file.js");
+const { readFile, saveFile } = require("../file.js");
+const serverless = require("serverless-http");
 const app = express();
 const port = 3000;
 
@@ -79,6 +80,9 @@ app.delete("/todos/:id", (req, res) => {
 
   res.json({ message: "Tugas berhasil dihapus!", data: filteredData });
 });
+
+module.exports = app;
+module.exports.handler = serverless(app);
 
 app.listen(port, () => {
   console.log(`server listening on port http://localhost:3000`);
