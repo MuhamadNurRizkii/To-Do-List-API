@@ -5,7 +5,26 @@ const port = 3000;
 
 app.use(express.json());
 
-const Todo = [];
+const Todo = [
+  {
+    id: 1,
+    name: "belajar coding",
+    status: false,
+    message: "Tugas belum selesai",
+  },
+  {
+    id: 2,
+    name: "belajar fetch API",
+    status: true,
+    message: "Tugas selesai",
+  },
+  {
+    id: 3,
+    name: "baca buku",
+    status: false,
+    message: "Tugas belum selesai",
+  },
+];
 
 app.get("/", (req, res) => {
   res.redirect("/todos");
