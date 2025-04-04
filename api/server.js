@@ -1,11 +1,11 @@
 const express = require("express");
-const fs = require("fs");
-const { readFile, saveFile } = require("../file.js");
 const serverless = require("serverless-http");
 const app = express();
 const port = 3000;
 
 app.use(express.json());
+
+const Todo = [];
 
 app.get("/", (req, res) => {
   res.redirect("/todos");
@@ -13,13 +13,10 @@ app.get("/", (req, res) => {
 
 // GET -> lihat semua todos
 app.get("/todos", (req, res) => {
-  const data = readFile();
-
-  res.json(data);
+  res.json(Todo);
 });
 // POST -> tambah todos
 app.post("/todos", (req, res) => {
-  const data = readFile();
   const { name, status = false } = req.body;
 
   if (!name) {
@@ -31,14 +28,13 @@ app.post("/todos", (req, res) => {
   }
 
   const newTodo = {
-    id: data.length > 0 ? data[data.length - 1].id + 1 : 1,
+    id: Todo.length > 0 ? Todo[Todo.length - 1].id + 1 : 1,
     name,
     status,
     message: status ? "Tugas selesai" : "Tugas belum selesai",
   };
 
-  data.push(newTodo);
-  saveFile(data);
+  Todo.push(newTodo);
 
   res
     .status(201)
@@ -46,11 +42,10 @@ app.post("/todos", (req, res) => {
 });
 // PUT -> edit todos
 app.put("/todos/:id", (req, res) => {
-  const data = readFile();
   const id = parseInt(req.params.id);
   const { name, status, message } = req.body;
 
-  const todo = data.find((p) => p.id === id);
+  const todo = Todo.find((p) => p.id === id);
 
   if (!todo) {
     return res.status(400).json({ message: "Tugas tidak ditemukan!" });
@@ -64,23 +59,18 @@ app.put("/todos/:id", (req, res) => {
   todo.status = typeof status === "boolean" ? status : todo.status;
   todo.message = status ? "Tugas selesai" : "Tugas belum selesai";
 
-  saveFile(data);
-
   res.json({ message: "Tugas berhasil diperbarui", data: todo });
 });
 // DELETE -> hapus todos
 app.delete("/todos/:id", (req, res) => {
-  let data = readFile();
-  const originalLength = data.length;
+  const originalLength = Todo.length;
   const id = parseInt(req.params.id);
 
-  const filteredData = data.filter((p) => p.id !== id);
+  const filteredData = Todo.filter((p) => p.id !== id);
 
   if (filteredData.length === originalLength) {
     return res.status(404).json({ message: "Tugas tidak ditemukan" });
   }
-
-  saveFile(filteredData);
 
   res.json({ message: "Tugas berhasil dihapus!", data: filteredData });
 });
